@@ -1,17 +1,35 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+<script src="http://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+
 <style>
-  body {background-color: powderblue;}
+  body {background: url(http://cdn.wallpapersafari.com/27/46/6NOMvC.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;}
   h1   {color: #5D4713;}
   p    {color: #E035E4;}
+  table {    border-collapse: collapse;}
+  table, th, td {border:1px solid black;}
+  table.sortable thead {background-color:#000;
+      color:#FFFFFF;
+      font-weight: bold;
+      cursor: default;}
+
 </style>
+
 <meta charset="UTF-8">
 <meta http-equiv="Content-Type" content="text/html">
 <title>Index</title>
 </head>
-<body>
-  <background-color: #FF00FF>
+<body contextmenu="infomenu">
+  <menu type="context" id="infomenu">
+    <menuitem label="9GAG" onclick="window.open('http://www.9gag.com/')"></menuitem>
+    <menuitem label="Facebook" onclick="window.open('http://www.facebook.com/')"></menuitem>
+    <menuitem label="Don't panic" onclick="window.open('http://fs.cs.uni-frankfurt.de/sites/default/files/field/image/don_t_panic_and_carry_a_towel_by_ashique47-d3fu8qd.jpg')"></menuitem>
+</menu>
     <header>
         <h1>Diese Website ist Müll</h1>
     </header>
@@ -25,6 +43,40 @@
   <li tabindex="1">Menupunkt 1</li>
   <li tabindex="2">Menupunkt 2</li>
   <li tabindex="3">Menupunkt 3</li>
+  <li tabindex="4" accesskey="T">Menupunkt T</li>
+  <li accesskey="e" contenteditable="true">Editable</li>
 </menu>
+
+
+<table class = "sortable">
+    <thead>
+        <tr>
+          <th>Gruppe</th>
+          <th>Vorname</th>
+          <th>Name</th>
+          <th>Studiengang</th>
+          <th>Matrikelnummer</th>
+  </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>Manatees</td>
+          <td>Dominik</td>
+          <td>Holweck</td>
+          <td>IB</td>
+          <td>1430590</td>
+        </tr>
+        <tr>
+            <td>Manatees</td>
+            <td>Jonas</td>
+            <td>Lagaude</td>
+            <td>IB</td>
+            <td>1430596</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
 </body>
 </html>
