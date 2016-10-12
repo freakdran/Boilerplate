@@ -1,0 +1,61 @@
+menu {
+  position: fixed;
+      left:0px;
+      right: 90%;
+      top:10%;
+      bottom:0px;
+      background-color: #f00;
+      margin:0px
+    }
+main {
+  position: absolute;
+      right:0px;
+      left: 10%;
+      top:10%;
+      bottom:0px;
+      background-color: #F3CE31;
+      margin:0px;
+    }
+body {
+  margin:0px;
+}
+header {background-color: red;
+      position: fixed;
+      top:0px;
+      bottom:90%;
+      left:0px;
+      right:0px;
+      margin:0px;
+      z-index:50;
+}
+
+h1 {
+  margin:0px;
+}
+
+a:hover{color:#24D6DD;}
+a:visited{color:#06044E;}
+a:visited:hover{color:#24D6DD;}
+
+table, th, td {border:1px solid black;}
+table {border-collapse: collapse;}
+
+table thead {
+  background-color: white;
+    color:#000;
+    font-weight: bold;
+    cursor: default;}
+tr:hover{background-color: #F3CE76;}
+td:hover{background-color: blue;}
+thead:hover{background-color: white;}
+th:hover{background-color: white;}
+
+/*
+section {
+  position:fixed;
+  top:auto;
+  bottom:0px;
+  right:0px;
+  left:auto;
+}
+*/
