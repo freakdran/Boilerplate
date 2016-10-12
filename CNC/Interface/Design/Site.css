@@ -46,16 +46,18 @@ table thead {
     font-weight: bold;
     cursor: default;}
 tr:hover{background-color: #F3CE76;}
-td:hover{background-color: blue;}
-thead:hover{background-color: white;}
-th:hover{background-color: white;}
 
-/*
-section {
-  position:fixed;
-  top:auto;
-  bottom:0px;
-  right:0px;
-  left:auto;
-}
-*/
+td:hover{background-color: #CFB130;}
+th{background-color: white;}
+
+main > section {position:absolute;}
+
+section {top:0px;
+bottom:0px;
+left:0px;
+right:0px;}
+
+section.active{
+  margin-left: 100%;
+    transition: 4s margin ease-out;
+  }
