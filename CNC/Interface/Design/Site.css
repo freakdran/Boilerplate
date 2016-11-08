@@ -1,20 +1,25 @@
 menu {
   position: fixed;
       left:0px;
-      right: 90%;
+      right: 80%;
       top:10%;
       bottom:0px;
       background-color: #f00;
       margin:0px
     }
+
+menu li {list-style: none;}
+
 main {
+  display:block;;
   position: absolute;
       right:0px;
-      left: 10%;
+      left: 20%;
       top:10%;
       bottom:0px;
       background-color: #F3CE31;
       margin:0px;
+      overflow: hidden;
     }
 body {
   margin:0px;
@@ -50,14 +55,81 @@ tr:hover{background-color: #F3CE76;}
 td:hover{background-color: #CFB130;}
 th{background-color: white;}
 
-main > section {position:absolute;}
+main > section {
+  position:absolute;
+  display:block;
+	overflow-y: scroll;
+  overflow-x: hidden;
+}
 
-section {top:0px;
+main > section {top:0px;
 bottom:0px;
 left:0px;
 right:0px;}
 
-section.active{
-  margin-left: 100%;
-    transition: 4s margin ease-out;
-  }
+main > section {
+	transform: translate(100%, 0%);
+	transition: transform 300ms ease-out;
+}
+
+main > section:target {
+  transform: translate(0%, 0%);
+  transition: transform 300ms ease-out;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
