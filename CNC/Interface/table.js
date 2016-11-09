@@ -1,13 +1,23 @@
-var table = document.getElementById("mytable1");  // set this to your table
-
-var tbody = document.createElement("tbody");
-table.appendChild(tbody);
-orderArray.forEach(function(items) {
-  var row = document.createElement("tr");
-  items.forEach(function(item) {
-    var cell = document.createElement("td");
-    cell.textContent = item;
-    row.appendChild(cell);
-  });
-  tbody.appendChild(row);
-});
+function tableCreate() {
+    var body = document.getElementsByTagName('body')[0];
+    var tbl = document.createElement('table');
+    tbl.style.width = '100%';
+    tbl.setAttribute('border', '1');
+    var tbdy = document.createElement('tbody');
+    for (var i = 0; i < 5; i++) {
+        var tr = document.createElement('tr');
+        for (var j = 0; j < 2; j++) {
+            if (i == 2 && j == 1) {
+                break
+            } else {
+                var td = document.createElement('td');
+                td.appendChild(document.createTextNode('\u0020'))
+                i == 1 && j == 1 ? td.setAttribute('rowSpan', '2') : null;
+                tr.appendChild(td)
+            }
+        }
+        tbdy.appendChild(tr);
+    }
+    tbl.appendChild(tbdy);
+    body.appendChild(tbl)
+}

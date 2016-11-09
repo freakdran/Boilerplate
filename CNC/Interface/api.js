@@ -16,3 +16,7 @@ xhr.onload = function() {
 };
 
 xhr.send(null);
+
+data.forEach(entry, i) => {
+  console.log(entry);
+}
