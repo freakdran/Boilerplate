@@ -19,7 +19,9 @@ main {
       bottom:0px;
       background-color: #F3CE31;
       margin:0px;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: scroll;
+
     }
 body {
   margin:0px;
@@ -42,7 +44,8 @@ a:hover{color:#24D6DD;}
 a:visited{color:#06044E;}
 a:visited:hover{color:#24D6DD;}
 
-table, th, td {border:1px solid}
+table, th, td {border:1px solid; max-width: 1000px}
+td{word-break: break-all; word-wrap: break-word}
 table {border-collapse: collapse;}
 
 table thead {

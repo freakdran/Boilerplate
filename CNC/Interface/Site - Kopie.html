@@ -1,10 +1,10 @@
 <html lang="de">
 <head>
-<link href=".\Design\Site.css" rel="stylesheet">
+  <link href=".\Design\Site.css" rel="stylesheet">
 
-<meta charset="UTF-8">
-<meta name="author" content="Dominik Holweck">
-<title>Index</title>
+  <meta charset="UTF-8">
+  <meta name="author" content="Dominik Holweck">
+  <title>Index</title>
 </head>
 
 <body>
@@ -14,51 +14,59 @@
 
   <script language="javascript" type="text/javascript" src="status.js">></script>
   <script language="javascript" type="text/javascript" src="tasks.js">></script>
-<menu>
-<li><a href="#status">Status</a></li>
-<li><a href="#tasks">Aufträge</a></li>
-</menu>
+  <menu>
+    <li><a href="#status">Status</a></li>
+    <li><a href="#tasks">Aufträge</a></li>
+  </menu>
 
-<main id="main">
-<section id="status">
-  <table width="100%" border="1">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>IP</th>
-        <th>Task</th>
-        <th>Workload</th>
-        <th>Start/Stop</th>
-      </tr>
-    </thead>
-  <tbody>
-  </tbody>
-</table>
-</section>
-
-<section id="tasks">
-  <table>
-    <thead>
-      <tr>
-        <th>Input</th>
-        <th>Output</th>
-        <th>ID</th>
-        <th>Type</th>
-      </tr>
-    </thead>
-      <tbody></tbody>
-    </table>
-
-    <p>TEXTFELD || DROOPDOWN(Select) || BUTTON</p>
-
-    <label class="switch">
-      <input type="checkbox" checked>
-      <div class="slider round"></div>
-    </label>
+  <main id="main">
+    <section id="status">
+      <table width="100%" border="1">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>IP</th>
+            <th>Task</th>
+            <th>Workload</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <script language="javascript" type="text/javascript" src="POSTStatus.js">></script>
+      <button onclick="POSTRequestStatus()">Post Status</buton>
 
 
-</section>
+      </section>
 
-</main>
-</body>
-</html>
+      <section id="tasks">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Type</th>
+              <th>Input</th>
+              <th>Output</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+<label>Input</label>
+<input id="taskInput" maxlength="100">
+        <form action="#">
+          <label>Typ:
+            <select id = "type">
+              <option>hash-md5</option>
+              <option>hash-sha256</option>
+              <option>crack-md5</option>
+            </select>
+          </label>
+        </form>
+        <script language="javascript" type="text/javascript" src="POSTTask.js">></script>
+        <button onclick="POSTRequestTask()">Post Task</buton>
+
+        </section>
+
+      </main>
+    </body>
+    </html>

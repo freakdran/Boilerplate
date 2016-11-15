@@ -1,7 +1,6 @@
-/*
-//NUR TEST
 
-var useData = function(data) {
+//NUR TEST
+/*var useDataStatus = function(data) {
   data.forEach((element, i) => {
 
     var table = document.querySelector("table");
@@ -12,13 +11,10 @@ var useData = function(data) {
         cell = row.insertCell(1);
         cell.innerHTML = element.ip;
         cell = row.insertCell(2);
-        cell.innerHTML = element.workload;
+        cell.innerHTML = element.task;
         cell = row.insertCell(3);
-        if(element.workload === 0) {
-          cell.innerHTML = "inaktiv";
-        } else {
-          cell.innerHTML = "aktiv";
-        }
+        cell.innerHTML = element.workload;
+
 
     console.log(element.id);
     console.log(element.ip);
