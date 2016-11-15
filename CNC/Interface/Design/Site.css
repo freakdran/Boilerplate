@@ -4,7 +4,7 @@ menu {
       right: 80%;
       top:10%;
       bottom:0px;
-      background-color: #f00;
+      background-color: #cd5c5c;
       margin:0px
     }
 
@@ -17,7 +17,7 @@ main {
       left: 20%;
       top:10%;
       bottom:0px;
-      background-color: #F3CE31;
+      background-color: #F08080;
       margin:0px;
       overflow-x: hidden;
       overflow-y: scroll;
@@ -26,7 +26,7 @@ main {
 body {
   margin:0px;
 }
-header {background-color: red;
+header {background-color: #cd5c5c;
       position: fixed;
       top:0px;
       bottom:90%;
@@ -56,9 +56,9 @@ table thead {
   }
   thead:hover{background-color: white}
 
-tr:hover{background-color: #F3CE76;}
+tr:hover{background-color: #F08F8F;}
 
-td:hover{background-color: #CFB130;}
+td:hover{background-color: #F0A0A0;}
 
 section {
   position:absolute;
