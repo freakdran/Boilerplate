@@ -1,73 +1,72 @@
-
-//NUR TEST
-/*var useDataStatus = function(data) {
-  data.forEach((element, i) => {
-
-    var table = document.querySelector("table");
-        var body = table.createTBody();
-        var row = body.insertRow(0);
-        var cell = row.insertCell(0);
-        cell.innerHTML = element.id;
-        cell = row.insertCell(1);
-        cell.innerHTML = element.ip;
-        cell = row.insertCell(2);
-        cell.innerHTML = element.task;
-        cell = row.insertCell(3);
-        cell.innerHTML = element.workload;
-
-
-    console.log(element.id);
-    console.log(element.ip);
-    console.log(element.task);
-    console.log(element.workload);
-    });
-};
-*/
 /*
-RICHTIGER CODE!!! DON'T CHANGE!!!!!!!!!!!!
-var useData = function(data) {
-  var code = data.map((val, index) => {
-    return '<tr><td>' + Object.values(val).join('</td><td>') + '</td></tr>';
-  }).join('\n');
-  return code;
-};
+1. Build Status table when loading website
+2. Refreshs Status table when needed
 */
+var makeStatusTable = function() {
+  var statusGET = new XMLHttpRequest();
+
+  statusGET.open('GET', 'http://botnet.artificial.engineering:80/api/status', true);
+  statusGET.responseType = 'json';
+  statusGET.setRequestHeader('Content-Type', 'application/json');
+  statusGET.setRequestHeader('Token', 'my-token-123');
+  statusGET.onload = function() {
+
+    var data = statusGET.response;
+    if (data !== null) {
+      //          console.log(data); // Parsed JSON object
+      var element = document.querySelector('#status tbody');
+      element.innerHTML = useDataStatus(data);
+    }
+  };
+  statusGET.send(null);
+}
+
+makeStatusTable();
 
 var useDataStatus = function(data) {
   var code = data.map((val, index) => {
     var wlButton;
     if(val.workload === 0) {
       wlButton = '<label class="switch"> ' +
-        '<input type="checkbox"> ' +
-        '<div class="slider round"></div> ' +
-        '</label>';
+      '<input type="checkbox" onchange = "POSTRequestStatus(' + val.id + ', ' + val.workload + ')"> ' +
+      '<div class="slider round"></div> ' +
+      '</label>';
     } else {
       wlButton = '<label class="switch"> ' +
-        '<input type="checkbox" checked> ' +
-        '<div class="slider round"></div> ' +
-        '</label>';
+      '<input name="' + val.id + '" type="checkbox" onchange = "POSTRequestStatus(' + val.id + ', ' + val.workload + ')" checked> ' +
+      '<div class="slider round"></div> ' +
+      '</label>';
     }
     return '<tr><td>' + Object.values(val).join('</td><td>') + '</td><td>' + wlButton +'</td></tr>';
   }).join('\n');
-    return code;
+  return code;
 };
 
-var stat = new XMLHttpRequest();
+/*
+POST this shit
+*/
+var POSTRequestStatus = function(ids, workload) {
+  var statusPOST = new XMLHttpRequest();
 
-stat.open('GET', 'http://botnet.artificial.engineering:80/api/status');
+  statusPOST.open('POST', 'http://botnet.artificial.engineering:80/api/Status', true);
+  statusPOST.responseType = 'json';
+  statusPOST.setRequestHeader('Content-Type', 'application/json');
+  //statusPOST.setRequestHeader('Token', 'my-token-1337');
 
-stat.responseType = 'json';
-stat.setRequestHeader('Content-Type', 'application/json');
-stat.setRequestHeader('Token', 'my-token-123');
+  var statusToSend = {
+    id: ids,
+    status: null
+  };
 
-stat.onload = function() {
+  if(workload === 0) {
+    statusToSend.status = true;
+  } else {
+    statusToSend.status = false;
+  }
 
-    var data = stat.response;
-    if (data !== null) {
-        console.log(data); // Parsed JSON object
-        var element = document.querySelector('#status tbody');
-        element.innerHTML = useDataStatus(data);
-    }
+  statusPOST.send(JSON.stringify(statusToSend));
+
+  makeStatusTable();
 };
 
-stat.send(null);
+setInterval("makeStatusTable()",10000);

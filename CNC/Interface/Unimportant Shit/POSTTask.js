@@ -15,3 +15,5 @@ var taskToSend = {
 };
 taskPOST.send(JSON.stringify(taskToSend));
 };
+
+setInterval("refreshTaskTable()",10000);

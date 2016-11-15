@@ -1,0 +1,15 @@
+  table {border-collapse: collapse;}
+  table, th, td {border:1px solid black;}
+  table.sortable thead {background-color:#000;
+      color:#FFFFFF;
+      font-weight: bold;
+      cursor: default;}
+  p{color: #E035E4;}
+#tasks{
+  float:right;
+  width: 50%;
+}
+#status{
+  float:left;
+  width: 50%;
+}

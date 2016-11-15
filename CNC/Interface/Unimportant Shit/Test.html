@@ -4,27 +4,26 @@
   <script src="http://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
   <meta charset="UTF-8">
   <meta name="author" content="Dominik Holweck">
-  <link href=".\Design\test.css" rel="stylesheet">
-  <link href=".\Design\print.css" rel="stylesheet" media = "print">
+  <link href=".\Design\Site.css" rel="stylesheet">
   <title>Last Live Coding</title>
 </head>
 
 <body>
-    <script language="javascript" type="text/javascript" src="testgenerator.js">></script>
+  <script language="javascript" type="text/javascript" src="testgenerator.js">></script>
   <menu>
     <li><a href="#status">Status</a></li>
     <li><a href="#tasks">Tasks</a></li>
   </menu>
 
-<main>
-  <section id="status">
-    <table id="status-overwiew" class="sortable">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Alter</th>
-        </tr>
-      </thead>
+  <main>
+    <section id="status">
+      <table id="status-overwiew" class="sortable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Alter</th>
+          </tr>
+        </thead>
         <tbody>
           <tr>
             <td>Odin</td>
@@ -88,7 +87,14 @@
           </tr>
         </tbody>
       </table>
-  </section>
-  <section id="tasks">
-    <p>Whatever Task you need</p>
-  </section>
+
+      <label class="switch">
+        <input type="checkbox" name="1" onchange = "checker(this)">
+        <div class="slider round"></div>
+      </label>
+      <button onclick = "checker2(this)">Is Checked?</button>
+
+    </section>
+    <section id="tasks">
+      <p>Whatever Task you need</p>
+    </section>

@@ -12,8 +12,10 @@
     <h1>WEBSITE OF DOOM</h1>
   </header>
 
-  <script language="javascript" type="text/javascript" src="status.js">></script>
-  <script language="javascript" type="text/javascript" src="tasks.js">></script>
+  <script language="javascript" type="text/javascript" src="status.js"></script>
+  <script language="javascript" type="text/javascript" src="tasks.js"></script>
+  <script language="javascript" type="text/javascript" src="sortable.js"></script>
+
   <menu>
     <li><a href="#status">Status</a></li>
     <li><a href="#tasks">Aufträge</a></li>
@@ -33,27 +35,28 @@
         </thead>
         <tbody></tbody>
       </table>
-      <script language="javascript" type="text/javascript" src="POSTStatus.js">></script>
-      <button onclick="POSTRequestStatus()">Post Status</buton>
+      <button onclick="refreshStatusTable()">Refresh Table</button>
 
 
-      </section>
+    </section>
+    
+    <section id="tasks">
+      <table class="sortable">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Input</th>
+            <th>Output</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
 
-      <section id="tasks">
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Type</th>
-              <th>Input</th>
-              <th>Output</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-<label>Input</label>
-<input id="taskInput" maxlength="100">
-        <form action="#">
+      <label>Input</label>
+      <input id="taskInput" maxlength="100">
+      <form action="#">
+        <label>
           <label>Typ:
             <select id = "type">
               <option>hash-md5</option>
@@ -62,11 +65,10 @@
             </select>
           </label>
         </form>
-        <script language="javascript" type="text/javascript" src="POSTTask.js">></script>
         <button onclick="POSTRequestTask()">Post Task</buton>
+        </label>
+      </section>
 
-        </section>
-
-      </main>
-    </body>
-    </html>
+    </main>
+  </body>
+  </html>

@@ -1,67 +1,61 @@
+/*
+1. Build Tasks table when loading website
+2. Refreshs Tasks table when needed
+*/
+var makeTaskTable = function() {
+  var taskGET = new XMLHttpRequest();
 
-//NUR TEST
+  taskGET.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks', true);
+  taskGET.responseType = 'json';
+  taskGET.setRequestHeader('Content-Type', 'application/json');
+  taskGET.setRequestHeader('Token', 'my-token-123');
+  taskGET.onload = function() {
+
+    var data = taskGET.response;
+    if (data !== null) {
+      //          console.log(data); // Parsed JSON object
+      var element = document.querySelector('#tasks tbody');
+      element.innerHTML = useDataTasks(data);
+    }
+  };
+  taskGET.send(null);
+}
+
+makeTaskTable();
 
 var useDataTasks = function(data) {
-  data.forEach((element, i) => {
+  var code = data.map((val, index) => {
+    var input = val.data.input;
+    var output = val.data.output;
+    var id = val.id;
+    var type = val.type;
 
-    var table = document.querySelector("#tasks table");
-    var body = table.createTBody();
-    var row = body.insertRow(0);
-    var cell = row.insertCell(0);
-    cell.innerHTML = element.id;
-    cell = row.insertCell(1);
-    cell.innerHTML = element.type;
-    cell = row.insertCell(2);
-    cell.innerHTML = element.data.input;
-    cell = row.insertCell(3);
-    cell.innerHTML = element.data.output;
-
-
-    /*console.log(element.id);
-    console.log(element.ip);
-    console.log(element.task);
-    console.log(element.workload);
-    */
-  });
+    return '<tr><td style="white-space:nowrap">' + id + '</td><td>' + type + '</td><td>' + input + '</td><td>' + output +'</td></tr>';
+  }).join('\n');
+    return code;
 };
-
 
 /*
-RICHTIGER CODE!!! DON'T CHANGE!!!!!!!!!!!!
-var useData = function(data) {
-var code = data.map((val, index) => {
-return '<tr><td>' + Object.values(val).join('</td><td>') + '</td></tr>';
-}).join('\n');
-return code;
-};
+POST this shit
 */
+var POSTRequestTask = function() {
+  var taskPOST = new XMLHttpRequest();
 
+  taskPOST.open('POST', 'http://botnet.artificial.engineering:80/api/Tasks', true);
+  taskPOST.responseType = 'json';
+  taskPOST.setRequestHeader('Content-Type', 'application/json');
+  //taskPOST.setRequestHeader('Token', 'my-token-1337');
 
-/*
-var useDataTasks = function(data) {
-var code = data.map((val, index) => {
-return '<tr><td>' + Object.values(val).join('</td><td>') + '</td></tr>';
-}).join('\n');
-return code;
+  var taskToSend = {
+    type: document.getElementById('type').value,
+    data: {
+      input: document.getElementById('taskInput').value
+    }
+  };
+
+  taskPOST.send(JSON.stringify(taskToSend));
+
+  makeTaskTable();
 };
-*/
 
-
-var taskGET = new XMLHttpRequest();
-
-taskGET.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks', true);
-
-taskGET.responseType = 'json';
-taskGET.setRequestHeader('Content-Type', 'application/json');
-taskGET.setRequestHeader('Token', 'my-token-123');
-
-taskGET.onload = function() {
-
-  var data = taskGET.response;
-  if (data !== null) {
-    console.log(data); // Parsed JSON object
-    var element = document.querySelector('#tasks tbody');
-    element.innerHTML = useDataTasks(data);
-  }
-};
-taskGET.send(null);
+setInterval("makeTaskTable()",10000);
