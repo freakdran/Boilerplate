@@ -34,6 +34,15 @@ header {background-color: #cd5c5c;
       z-index:50;
 }
 
+
+
+#inputSelector{
+  position: fixed;
+  bottom: 20px;
+  margin-left: 18%;
+  z-index: 3000;
+}
+
 h1 {
   margin:0px;
 }
@@ -44,7 +53,8 @@ a:visited:hover{color:#24D6DD;}
 
 table, th, td {border:1px solid; max-width: 1000px}
 td{word-break: break-all; word-wrap: break-word}
-table {border-collapse: collapse;}
+table {border-collapse: collapse;
+margin-bottom: 80px}
 
 table thead {
   background-color: white;
@@ -68,6 +78,7 @@ section {
   width: 100%;
   transition: 1500ms left ease-out;
   overflow: auto;
+  transform: translate(0%);
 }
 
 section.active {

@@ -52,19 +52,21 @@
         </thead>
         <tbody></tbody>
       </table>
-      <label>Input</label>
-      <input id="taskInput" maxlength="100">  
-        <label>
-          <label>Typ:
-            <select id = "type">
-              <option>hash-md5</option>
-              <option>hash-sha256</option>
-              <option>crack-md5</option>
-            </select>
-          </label>
-        <button onclick="POSTRequestTask()">Post Task</buton>
+
+      <div id="inputSelector">
+        <p>Input</p>
+        <input id="taskInput" maxlength="100" />
+        <p>Typ:</p>
+        <select id = "type">
+          <option>hash-md5</option>
+          <option>hash-sha256</option>
+          <option>crack-md5</option>
+        </select>
+        <button onclick="POSTRequestTask()">Post Task</button>
+        </div>
       </section>
     </main>
+    <footer></footer>
     <script src="./index.js"></script>
   </body>
   </html>
