@@ -65,7 +65,7 @@ main > section {
 	bottom: 0px;
 	left: calc(20% + 32px);
 	width: 100%;
-	overflow-x: hidden;
+	overflow: auto;
 	overflow-y: scroll;
 }
 
@@ -79,7 +79,13 @@ main > section:target {
 	transition: transform 300ms ease-out;
 }
 
+#status {
+	width:100%;
+}
 
+#tasks {
+	width:100%;
+}
 
 /*
  * MENU

@@ -19,7 +19,9 @@ main {
       bottom:0px;
       background-color: #F08080;
       margin:0px;
-      overflow:hidden;
+      overflow-x: hidden;
+      overflow-y: scroll;
+
     }
 body {
   margin:0px;
@@ -66,17 +68,16 @@ section {
   right:0px;
   height: 100%;
   width: 100%;
-  transition: 1500ms left ease-out;
-  overflow: auto;
+  transition: 1000ms left ease-out;
 }
 
-section.active {
+section:target {
   transform: translate(0%);
-  transition: transform 1500ms left ease-in;
-  left: 20%;
+  transition: transform 300ms left ease-in;
+  left: 0%;
 }
 
-section.active {
+section:active {
   position:absolute;
   left: 0%;
   top:0px;

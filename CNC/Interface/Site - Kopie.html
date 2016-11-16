@@ -1,6 +1,6 @@
 <html lang="de">
 <head>
-  <link href="./Design/Site.css" rel="stylesheet">
+  <link href=".\Design\Site.css" rel="stylesheet">
 
   <meta charset="UTF-8">
   <meta name="author" content="Dominik Holweck">
@@ -12,13 +12,13 @@
     <h1>WEBSITE OF DOOM</h1>
   </header>
 
-  <script src="status.js"></script>
-  <script src="tasks.js"></script>
-  <script src="sortable.js"></script>
+  <script language="javascript" type="text/javascript" src="status.js"></script>
+  <script language="javascript" type="text/javascript" src="tasks.js"></script>
+  <script language="javascript" type="text/javascript" src="sortable.js"></script>
 
   <menu>
-    <li><a href="#status" onclick="_navigate('status'); return false;">Status</a></li>
-    <li><a href="#tasks" onclick="_navigate('tasks'); return false;">Aufträge</a></li>
+    <li><a href="#status">Status</a></li>
+    <li><a href="#tasks">Aufträge</a></li>
   </menu>
 
   <main id="main">
@@ -53,7 +53,8 @@
         <tbody></tbody>
       </table>
       <label>Input</label>
-      <input id="taskInput" maxlength="100">  
+      <input id="taskInput" maxlength="100">
+      <form>
         <label>
           <label>Typ:
             <select id = "type">
@@ -62,9 +63,9 @@
               <option>crack-md5</option>
             </select>
           </label>
+        </form>
         <button onclick="POSTRequestTask()">Post Task</buton>
       </section>
     </main>
-    <script src="./index.js"></script>
   </body>
   </html>

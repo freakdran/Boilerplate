@@ -33,7 +33,7 @@ var useDataStatus = function(data) {
       '</label>';
     } else {
       wlButton = '<label class="switch"> ' +
-      '<input name="' + val.id + '" type="checkbox" onchange = "POSTRequestStatus(' + val.id + ', ' + val.workload + ')" checked> ' +
+      '<input type="checkbox" onchange = "POSTRequestStatus(' + val.id + ', ' + val.workload + ')" checked> ' +
       '<div class="slider round"></div> ' +
       '</label>';
     }
@@ -63,10 +63,9 @@ var POSTRequestStatus = function(ids, workload) {
   } else {
     statusToSend.status = false;
   }
-
+console.log(JSON.stringify(statusToSend));
   statusPOST.send(JSON.stringify(statusToSend));
-
-  makeStatusTable();
+  setTimeout("makeStatusTable()", 500);
 };
 
-setInterval("makeStatusTable()",10000);
+//setInterval("makeStatusTable()",10000);

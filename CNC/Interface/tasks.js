@@ -54,8 +54,8 @@ var POSTRequestTask = function() {
   };
 
   taskPOST.send(JSON.stringify(taskToSend));
+  setTimeout("makeTaskTable()", 500);
 
-  makeTaskTable();
 };
 
-setInterval("makeTaskTable()",10000);
+//setInterval("makeTaskTable()",10000);
