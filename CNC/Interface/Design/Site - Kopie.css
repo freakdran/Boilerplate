@@ -1,11 +1,18 @@
+
+h1 {
+  color:rgb(0, 0, 80);
+}
+
 menu {
   position: fixed;
       left:0px;
       right: 80%;
-      top:10%;
+      top:8%;
       bottom:0px;
-      background-color: #cd5c5c;
-      margin:0px
+      background-color: rgb(119, 158, 203);
+      margin:0px;
+      min-width: 100px;
+      z-index: 2;
     }
 
 menu li {list-style: none;}
@@ -15,26 +22,45 @@ main {
   position: absolute;
       right:0px;
       left: 20%;
-      top:10%;
+      top:8%;
       bottom:0px;
-      background-color: #F08080;
+      background-color: rgb(174, 198, 207);
       margin:0px;
-      overflow-x: hidden;
-      overflow-y: scroll;
-
+      overflow:hidden;
     }
 body {
   margin:0px;
 }
-header {background-color: #cd5c5c;
-      position: fixed;
+header {background-color: rgb(119, 158, 203);
+      position: absolute;
       top:0px;
-      bottom:90%;
+      bottom:92%;
       left:0px;
       right:0px;
       margin:0px;
-      z-index:50;
+      z-index:3;
+      min-height: 75px;
 }
+
+
+
+#inputSelector {
+  position: fixed;
+  left: 100%;
+  max-width: 1000px;
+  max-height: 40px;
+  z-index: 3000;
+  transition: 1500ms left ease-out;
+  background-color: #F00;
+  padding: 10px;
+}
+
+#inputSelector.active {
+  transition: 1500ms left ease-in;
+  left:30%;
+  bottom: 0%;
+}
+
 
 h1 {
   margin:0px;
@@ -46,7 +72,8 @@ a:visited:hover{color:#24D6DD;}
 
 table, th, td {border:1px solid; max-width: 1000px}
 td{word-break: break-all; word-wrap: break-word}
-table {border-collapse: collapse;}
+table {border-collapse: collapse;
+margin-bottom: 80px}
 
 table thead {
   background-color: white;
@@ -68,16 +95,16 @@ section {
   right:0px;
   height: 100%;
   width: 100%;
-  transition: 1000ms left ease-out;
+  transition: 1500ms left ease-out;
+  overflow: auto;
 }
 
-section:target {
-  transform: translate(0%);
-  transition: transform 300ms left ease-in;
-  left: 0%;
+section.active {
+  transition: transform 1500ms left ease-in;
+  left: 20%;
 }
 
-section:active {
+section.active {
   position:absolute;
   left: 0%;
   top:0px;

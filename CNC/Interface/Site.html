@@ -9,7 +9,8 @@
 
 <body>
   <header>
-    <h1>WEBSITE OF DOOM</h1>
+    <h1>Status/Tasks</h1>
+    <h1>WAW MS1/MS2</h1>
   </header>
 
   <script src="status.js"></script>
@@ -54,19 +55,18 @@
       </table>
 
       <div id="inputSelector">
-        <p>Input</p>
-        <input id="taskInput" maxlength="100" />
-        <p>Typ:</p>
+        <span>Input: </span>
+        <input id="taskInput" maxlength="100"/>
+        <span>Typ:</span>
         <select id = "type">
           <option>hash-md5</option>
           <option>hash-sha256</option>
           <option>crack-md5</option>
         </select>
         <button onclick="POSTRequestTask()">Post Task</button>
-        </div>
-      </section>
-    </main>
-    <footer></footer>
-    <script src="./index.js"></script>
-  </body>
-  </html>
+      </div>
+    </section>
+  </main>
+  <script src="./index.js"></script>
+</body>
+</html>

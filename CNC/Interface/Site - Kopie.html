@@ -1,6 +1,6 @@
 <html lang="de">
 <head>
-  <link href=".\Design\Site.css" rel="stylesheet">
+  <link href="./Design/Site.css" rel="stylesheet">
 
   <meta charset="UTF-8">
   <meta name="author" content="Dominik Holweck">
@@ -9,16 +9,17 @@
 
 <body>
   <header>
-    <h1>WEBSITE OF DOOM</h1>
+    <h1>Status/Tasks</h1>
+    <h1>WAW MS1/MS2</h1>
   </header>
 
-  <script language="javascript" type="text/javascript" src="status.js"></script>
-  <script language="javascript" type="text/javascript" src="tasks.js"></script>
-  <script language="javascript" type="text/javascript" src="sortable.js"></script>
+  <script src="status.js"></script>
+  <script src="tasks.js"></script>
+  <script src="sortable.js"></script>
 
   <menu>
-    <li><a href="#status">Status</a></li>
-    <li><a href="#tasks">Aufträge</a></li>
+    <li><a href="#status" onclick="_navigate('status'); return false;">Status</a></li>
+    <li><a href="#tasks" onclick="_navigate('tasks'); return false;">Aufträge</a></li>
   </menu>
 
   <main id="main">
@@ -52,20 +53,20 @@
         </thead>
         <tbody></tbody>
       </table>
-      <label>Input</label>
-      <input id="taskInput" maxlength="100">
-      <form>
-        <label>
-          <label>Typ:
-            <select id = "type">
-              <option>hash-md5</option>
-              <option>hash-sha256</option>
-              <option>crack-md5</option>
-            </select>
-          </label>
-        </form>
-        <button onclick="POSTRequestTask()">Post Task</buton>
-      </section>
-    </main>
-  </body>
-  </html>
+
+      <div id="inputSelector">
+        <span>Input: </span>
+        <input id="taskInput" maxlength="100"/>
+        <span>Typ:</span>
+        <select id = "type">
+          <option>hash-md5</option>
+          <option>hash-sha256</option>
+          <option>crack-md5</option>
+        </select>
+        <button onclick="POSTRequestTask()">Post Task</button>
+      </div>
+    </section>
+  </main>
+  <script src="./index.js"></script>
+</body>
+</html>

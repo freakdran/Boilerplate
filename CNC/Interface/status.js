@@ -68,4 +68,4 @@ console.log(JSON.stringify(statusToSend));
   setTimeout("makeStatusTable()", 500);
 };
 
-//setInterval("makeStatusTable()",10000);
+setInterval("makeStatusTable()",10000);

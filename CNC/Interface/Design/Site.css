@@ -1,111 +1,166 @@
-menu {
-  position: fixed;
-      left:0px;
-      right: 80%;
-      top:10%;
-      bottom:0px;
-      background-color: #cd5c5c;
-      margin:0px
-    }
 
-menu li {list-style: none;}
-
-main {
-  display:block;;
-  position: absolute;
-      right:0px;
-      left: 20%;
-      top:10%;
-      bottom:0px;
-      background-color: #F08080;
-      margin:0px;
-      overflow:hidden;
-    }
 body {
   margin:0px;
 }
-header {background-color: #cd5c5c;
-      position: fixed;
-      top:0px;
-      bottom:90%;
-      left:0px;
-      right:0px;
-      margin:0px;
-      z-index:50;
-}
 
 
-
-#inputSelector{
-  position: fixed;
-  bottom: 20px;
-  margin-left: 18%;
-  z-index: 3000;
+/*Body CSSs in chronological order*/
+header {
+  background-color: rgb(119, 158, 203);
+  position: absolute;
+  top:0px;
+  bottom:92%;
+  left:0px;
+  right:0px;
+  margin:0px;
+  min-height: 80px;
+  max-height: 80px;
+  z-index:3;
 }
 
 h1 {
+  color:rgb(0, 0, 80);
   margin:0px;
 }
 
-a:hover{color:#24D6DD;}
-a:visited{color:#06044E;}
-a:visited:hover{color:#24D6DD;}
+menu {
+  background-color: rgb(119, 158, 203);
+  position: fixed;
+  top:80px;
+  bottom:0px;
+  left:0px;
+  right: 80%;
+  margin:0px;
+  min-width: 100px;
+  max-width: 100px;
+  z-index: 2;
+}
 
-table, th, td {border:1px solid; max-width: 1000px}
-td{word-break: break-all; word-wrap: break-word}
-table {border-collapse: collapse;
-margin-bottom: 80px}
+menu li {list-style: none;}
+a {color:rgb(0, 0, 80);}
+a:hover {color:rgb(10, 10, 90);}
+a:visited {color:rgb(94, 61, 159);}
+a:visited:hover {color: rgb(105, 68, 177)}
 
-table thead {
-  background-color: white;
-    color:#000;
-    font-weight: bold;
-    cursor: default;
-  }
-  thead:hover{background-color: white}
 
-tr:hover{background-color: #F08F8F;}
+main {
+  background-color: rgb(174, 198, 207);
+  position: absolute;
+  display:block;
+  top:80px;
+  bottom:0px;
+  left: 140px;
+  right:0px;
+  margin:0px;
+  overflow:hidden;
+}
 
-td:hover{background-color: #F0A0A0;}
-
+/*Section CSS*/
 section {
   position:absolute;
-  left: 100%;
   top:0px;
   bottom:0px;
+  left: 100%;
   right:0px;
   height: 100%;
   width: 100%;
   transition: 1500ms left ease-out;
   overflow: auto;
-  transform: translate(0%);
 }
-
 section.active {
-  transform: translate(0%);
-  transition: transform 1500ms left ease-in;
   left: 20%;
+  transition: transform 1500ms left ease-in;
 }
 
 section.active {
   position:absolute;
-  left: 0%;
   top:0px;
   bottom:0px;
+  left: 0%;
   right:0px;
   height: 100%;
 }
 
 
+/*#tasks bottom menu CSS*/
+#inputSelector {
+  background-color: rgba(119, 158, 203, 0.7);
+  position: fixed;
+  left: 100%;
+  max-width: 1000px;
+  max-height: 40px;
+  transition: 1500ms left ease-out;
+  padding: 10px;
+  z-index: 3000;
+  font-size: 20px;
+}
+
+#inputSelector.active {
+  bottom: 0%;
+  left: 140px;
+  transition: 1500ms left ease-in;
+}
+
+/*Version mit kompletter Weite am Ende (no opacity)
+  finde ich persönlich hübscher :D*/
+/*#inputSelector {
+  background-color: rgb(119, 158, 203);
+  position: fixed;
+  left: 100%;
+  max-height: 40px;
+  transition: 1500ms left ease-out;
+  padding: 10px;
+  z-index: 3000;
+}
+
+#inputSelector.active {
+  bottom: 0%;
+  left: 140px;
+  right: 0px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: 1500ms left ease-in;
+}
+*/
+
+
+/*Table general CSS*/
+table, th, td {
+  border:1px solid;
+  max-width: 1000px;
+}
+td{word-break: break-all;
+  word-wrap: break-word;
+}
+table {
+  border-collapse: collapse;
+  margin-bottom: 65px;
+  font-size: 20px;
+  text-align: center;
+}
+
+table thead {
+  background-color:rgb(136, 170, 183);
+  font-weight: bold;
+  cursor: default;
+}
+thead:hover{background-color: rgb(136, 170, 183)}
+tr:hover{background-color:rgb(138, 168, 179)}
+td:hover{background-color:rgb(138, 168, 179)}
+
+/*Special CSS for #status table*/
+#status table{
+  margin-bottom: 5px;
+}
+
+/*Switch CSS*/
 .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
 }
-
 .switch input {display:none;}
-
 /* The slider */
 .slider {
   position: absolute;
@@ -118,7 +173,6 @@ section.active {
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 .slider:before {
   position: absolute;
   content: "";
@@ -126,19 +180,16 @@ section.active {
   width: 26px;
   left: 4px;
   bottom: 4px;
-  background-color: white;
+  background-color: #eee;
   -webkit-transition: .4s;
   transition: .4s;
 }
-
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #74b7ec;
 }
-
 input:focus + .slider {
   box-shadow: 0 0 1px #2196F3;
 }
-
 input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
@@ -149,7 +200,6 @@ input:checked + .slider:before {
 .slider.round {
   border-radius: 34px;
 }
-
 .slider.round:before {
   border-radius: 50%;
 }

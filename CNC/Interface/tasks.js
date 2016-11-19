@@ -58,4 +58,4 @@ var POSTRequestTask = function() {
 
 };
 
-//setInterval("makeTaskTable()",10000);
+setInterval("makeTaskTable()",10000);
