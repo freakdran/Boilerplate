@@ -5,10 +5,10 @@
 var makeTaskTable = function() {
   var taskGET = new XMLHttpRequest();
 
-  taskGET.open('GET', 'http://botnet.artificial.engineering:80/api/Tasks', true);
+  taskGET.open('GET', 'http://localhost:3000/api/tasks', true);
   taskGET.responseType = 'json';
   taskGET.setRequestHeader('Content-Type', 'application/json');
-  taskGET.setRequestHeader('Token', 'my-token-123');
+  //taskGET.setRequestHeader('Token', 'my-token-123');
   taskGET.onload = function() {
 
     var data = taskGET.response;
@@ -41,7 +41,7 @@ POST this shit
 var POSTRequestTask = function() {
   var taskPOST = new XMLHttpRequest();
 
-  taskPOST.open('POST', 'http://botnet.artificial.engineering:80/api/Tasks', true);
+  taskPOST.open('POST', 'http://localhost:3000/api/tasks', true);
   taskPOST.responseType = 'json';
   taskPOST.setRequestHeader('Content-Type', 'application/json');
   //taskPOST.setRequestHeader('Token', 'my-token-1337');
@@ -52,7 +52,7 @@ var POSTRequestTask = function() {
       input: document.getElementById('taskInput').value
     }
   };
-
+  console.log(JSON.stringify(taskToSend));
   taskPOST.send(JSON.stringify(taskToSend));
   setTimeout("makeTaskTable()", 500);
 

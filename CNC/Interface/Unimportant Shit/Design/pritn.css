@@ -1,9 +1,0 @@
-body {background-color: #FFFFFF;}
-h1   {color: #5D4713;}
-p    {color: #E035E4;}
-table {    border-collapse: collapse;}
-table, th, td {border:1px solid black;}
-table.sortable thead {background-color:#000;
-    color:#FFFFFF;
-    font-weight: bold;
-    cursor: default;}

@@ -5,10 +5,11 @@
 var makeStatusTable = function() {
   var statusGET = new XMLHttpRequest();
 
-  statusGET.open('GET', 'http://botnet.artificial.engineering:80/api/status', true);
+  //statusGET.open('GET', 'http://botnet.artificial.engineering:80/api/status', true);
+  statusGET.open('GET', 'http://localhost:3000/api/status', true);
   statusGET.responseType = 'json';
   statusGET.setRequestHeader('Content-Type', 'application/json');
-  statusGET.setRequestHeader('Token', 'my-token-123');
+  //  statusGET.setRequestHeader('Token', 'my-token-123');
   statusGET.onload = function() {
 
     var data = statusGET.response;
@@ -48,7 +49,7 @@ POST this shit
 var POSTRequestStatus = function(ids, workload) {
   var statusPOST = new XMLHttpRequest();
 
-  statusPOST.open('POST', 'http://botnet.artificial.engineering:80/api/Status', true);
+  statusPOST.open('POST', 'http://localhost:3000/api/status', true);
   statusPOST.responseType = 'json';
   statusPOST.setRequestHeader('Content-Type', 'application/json');
   //statusPOST.setRequestHeader('Token', 'my-token-1337');
@@ -63,7 +64,7 @@ var POSTRequestStatus = function(ids, workload) {
   } else {
     statusToSend.status = false;
   }
-console.log(JSON.stringify(statusToSend));
+  console.log(JSON.stringify(statusToSend));
   statusPOST.send(JSON.stringify(statusToSend));
   setTimeout("makeStatusTable()", 500);
 };
