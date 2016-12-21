@@ -52,7 +52,6 @@ var POSTRequestTask = function() {
       input: document.getElementById('taskInput').value
     }
   };
-  console.log(JSON.stringify(taskToSend));
   taskPOST.send(JSON.stringify(taskToSend));
   setTimeout("makeTaskTable()", 500);
 
