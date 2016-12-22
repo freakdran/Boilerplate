@@ -148,7 +148,7 @@ var cryptData = function(ids, inputs, types) {
         pree = crypterPOST.onreadystatechange = function() {
           if(crypterPOST.readyState == XMLHttpRequest.DONE) {
             newOutput = crypterPOST.responseText;
-            console.log(typeof newOutput);
+            console.log(newOutput);
             return newOutput;
             console.log('noreturn');
 /*
@@ -160,7 +160,7 @@ MUSS FUNKTIONIEREN!!!
 
           }
         }
-        console.log('outer funkt ' + pree);
+        //console.log('outer funkt ' + pree);
       } else {
         //  console.log('Data not matching');
       };
