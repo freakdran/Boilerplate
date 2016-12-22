@@ -4,12 +4,12 @@ const cors = require('cors');
 const router = express.Router();
 const parser = require('body-parser');
 const fs = require('fs');
+const crypto = require('crypto');
 
 app.use(cors());
 app.use('/api',router);
 app.use(parser.urlencoded({ extended: true }));
 app.use(parser.json());
-
 
 let bots;
 /* = [
@@ -169,9 +169,6 @@ app.post('/api/Status', (req, res) => {
       console.log('Bot with id:' + req.body.id + ' set to 0');
     }
 
-    fs.writeFile('./bots.json', JSON.stringify(bots), 'utf8', (err) => {
-      if (err) throw err;
-    });
     idpresent = false;
     res.json('OK');
   } else {
@@ -224,9 +221,6 @@ app.post('/api/Tasks', (req, res) => {
       console.log('Task addded');
       tasks.push(newTask);
 
-      fs.writeFile('./tasks.json', JSON.stringify(tasks), 'utf8', (err) => {
-        if (err) throw err;
-      });
       res.json('OK');
     } else {
       console.log('Task already present');
@@ -250,7 +244,90 @@ app.post('/api/Reports', (req, res) => {
   Wenn output === null => NOT OK
   Wenn output !== null => OK + Berechnen
   */
+
+  for(var i = 0; i < tasks.length; i++) {
+    if(tasks[i].id === req.params.id) {
+      if(req.params.data.output !== null) {
+        newReport = {
+          id: tasks[i].id,
+          data: {
+            input: tasks[i].data.input,
+            output: req.params.id
+          }
+        }
+        reports.push(newReport);
+        tasks[i].data.output = req.params.data.output;
+
+        break;
+      } else {
+        console.log('output still null');
+      }
+    } else {
+      console.log('requested Task id not present');
+    }
+  }
+
+
+
+
 })
+
+app.post('/api/Crypter', (req, res) => {
+
+  var input = req.body.input;
+  var type = req.body.type;
+
+  console.log(req.body);
+
+  if(input !== null) {
+    if(type !== null) {
+      if(type === 'hash-md5') {
+        let md5sum = crypto.createHash('md5');
+        md5sum.update(input);
+        let result = md5sum.digest('hex');
+        console.log(result);
+        res.responseText = 'asdf';
+        res.json(result);
+      } else if(type === 'hash-sha256') {
+        let sha256sum = crypto.createHash('sha256');
+        sha256sum.update(input);
+        let result = sha256sum.digest('hex');
+        res.json(result);
+      } else if(type === 'crack-md5') {
+        console.log('crack-md5 not supported');
+      } else {
+        console.log('Wrong type');
+      }
+    } else {
+      console.log('No type defined');
+      res.json({'output': null});
+    }
+  } else {
+    console.log('No input');
+    res.json({'output': null});
+  }
+
+});
+
+var saveData = function() {
+
+  fs.writeFile('./reports.json', JSON.stringify(reports), 'utf8', (err) => {
+    if (err) throw err;
+  });
+
+  fs.writeFile('./tasks.json', JSON.stringify(tasks), 'utf8', (err) => {
+    if (err) throw err;
+  });
+
+  fs.writeFile('./bots.json', JSON.stringify(bots), 'utf8', (err) => {
+    if (err) throw err;
+  });
+}
+
+
+
+//setInterval('saveData()', 10000);
+
 /*
 const fs = require('fs');
 

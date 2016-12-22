@@ -1,3 +1,28 @@
+
+
+var testPoster = function() {
+  console.log('tester activated');
+  var cyPO = new XMLHttpRequest();
+  cyPO.open('POST', 'http://localhost:3000/api/crypter', true);
+//  cyPO.responseType = 'text';
+  cyPO.setRequestHeader('Content-Type', 'application/json');
+
+  var datts = {
+    type: 'hash-md5',
+    input: 'woot'
+  }
+  console.log(JSON.stringify(datts));
+  cyPO.send(JSON.stringify(datts));
+  console.log(cyPO.responseText);
+
+  cyPO.onreadystatechange = function() {
+    if(cyPO.readyState == XMLHttpRequest.DONE) {
+      console.log(cyPO.responseText);
+
+    }
+  }
+}
+
 /*
 1. Build Reports table when Botmode activated
 */
@@ -58,6 +83,7 @@ var botmode = function() {
     makeReportsTable();
     console.log('botmode an');
     botmodeIntervalId = setInterval('makeReportsTable()', 5000);
+
     crypterIntervalId = setInterval('cryptData()', 1500);
   } else {
     console.log('botmode aus');
@@ -68,9 +94,22 @@ var botmode = function() {
   }
 }
 
-var cryptData = function() {
+var postNewTasktoReports = function() {
+  for(var i = 0; i < tasks.length; i++) {
+    for(var j = 0; j < reports.length; j++) {
+      if(tasks[i].id !== reports[j].id) {
+        POSTRequestReports(tasks[i].id, tasks[i].data.input, tasks[i].type);
+      }
+    }
+  }
+}
+
+//const crypto = require('crypto');
+
+var cryptData = function(ids, inputs, types) {
 
   var taskData;
+  var newOutput;
 
   var tG = new XMLHttpRequest();
   tG.open('GET', 'http://localhost:3000/api/tasks', true);
@@ -79,24 +118,57 @@ var cryptData = function() {
   tG.onload = function() {
     taskData = tG.response;
     for(var i = 0; i < taskData.length; i++) {
-      if(taskData[i].data.output === null) {
-        console.log('data is null at id ' + taskData[i].id);
-        break;
+
+  //    console.log(ids + ' ' + inputs + ' ' + types);
+  //    console.log(taskData[i].id + ' ' + taskData[i].data.input + ' ' + taskData[i].type);
+
+      if(taskData[i].id == ids && taskData[i].data.input == inputs && taskData[i].type == types) {
+        var crypterPOST = new XMLHttpRequest();
+        crypterPOST.open('POST', 'http://localhost:3000/api/crypter', true);
+    //    crypterPOST.responseType = 'json';
+        crypterPOST.setRequestHeader('Content-Type', 'application/json');
+
+        var toCrypt = {
+          type: null,
+          input: inputs
+        };
+
+        if(types === 'hash-md5') {
+          toCrypt.type = types;
+          crypterPOST.send(JSON.stringify(toCrypt));
+        } else if (types === 'hash-sha256') {
+          toCrypt.type = types;
+          crypterPOST.send(JSON.stringify(toCrypt));
+        } else if (types === 'crack-md5'){
+          newOutput = 'crack-md5 not supported';
+        } else {
+          console.log('Wrong type');
+        }
+        var pree;
+        pree = crypterPOST.onreadystatechange = function() {
+          if(crypterPOST.readyState == XMLHttpRequest.DONE) {
+            newOutput = crypterPOST.responseText;
+            console.log(typeof newOutput);
+            return newOutput;
+            console.log('noreturn');
+/*
+DIESES RETURN!!!
+///////////////////////////////////////////////////////////////////////////
+MUSS FUNKTIONIEREN!!!
+*/
+
+
+          }
+        }
+        console.log('outer funkt ' + pree);
       } else {
-        console.log('Data of id: ' + taskData[i].id + ' already computed');
-      }
+        //  console.log('Data not matching');
+      };
     };
-
   };
-  console.log(taskData);
   tG.send(null);
+
   //console.log('crypter' + getTasksData());
-
-
-
-
-
-
 }
 
 
@@ -106,7 +178,7 @@ var cryptData = function() {
 /*
 POST this shit
 */
-var POSTRequestReports = function(ids, workload) {
+var POSTRequestReports = function(ids, inputs, types) {
   var reportsPOST = new XMLHttpRequest();
 
   reportsPOST.open('POST', 'http://localhost:3000/api/reports', true);
@@ -116,15 +188,16 @@ var POSTRequestReports = function(ids, workload) {
 
   var reportToSend = {
     id: ids,
-    status: null
+    data: {
+      input: inputs,
+      output: null
+    }
   };
-
-  if(workload === 0) {
-    reportToSend.status = true;
-  } else {
-    reportToSend.status = false;
-  }
-  console.log(JSON.stringify(reportToSend));
+  var newOUT = cryptData(ids, inputs, types);
+  console.log('newout' + newOUT);
+  reportToSend.data.output = cryptData(ids, inputs, types);
+  console.log('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW');
+  console.log('toesend ' + JSON.stringify(reportToSend));
   reportsPOST.send(JSON.stringify(reportToSend));
   setTimeout("makeReportsTable()", 500);
 };
