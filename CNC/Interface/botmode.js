@@ -144,8 +144,7 @@ var cryptData = function(ids, inputs, types) {
         } else {
           console.log('Wrong type');
         }
-        var pree;
-        pree = crypterPOST.onreadystatechange = function() {
+        crypterPOST.onreadystatechange = function() {
           if(crypterPOST.readyState == XMLHttpRequest.DONE) {
             newOutput = crypterPOST.responseText;
             console.log(newOutput);
@@ -156,8 +155,6 @@ DIESES RETURN!!!
 ///////////////////////////////////////////////////////////////////////////
 MUSS FUNKTIONIEREN!!!
 */
-
-
           }
         }
         //console.log('outer funkt ' + pree);
