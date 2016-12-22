@@ -11,8 +11,8 @@ app.use('/api',router);
 app.use(parser.urlencoded({ extended: true }));
 app.use(parser.json());
 
-let bots;
-/* = [
+let bots; /*
+ = [
   {
     id:0,
     ip: '127.0.0.1',
@@ -43,7 +43,7 @@ let bots;
 */
 
 let tasks;
-/* = [
+/*= [
   {
     id:0,
     type: 'hash-md5',
@@ -60,8 +60,8 @@ let tasks;
     }
   }
 ]
-
 */
+
 
 let reports;
 
@@ -220,7 +220,7 @@ app.post('/api/Tasks', (req, res) => {
       };
       console.log('Task addded');
       tasks.push(newTask);
-
+      savaData();
       res.json('OK');
     } else {
       console.log('Task already present');
@@ -245,25 +245,27 @@ app.post('/api/Reports', (req, res) => {
   Wenn output !== null => OK + Berechnen
   */
 
+  console.log('got post request');
   for(var i = 0; i < tasks.length; i++) {
-    if(tasks[i].id === req.params.id) {
-      if(req.params.data.output !== null) {
+    if(tasks[i].id === req.body.id) {
+      if(req.body.data.output !== null) {
         newReport = {
           id: tasks[i].id,
+          type: tasks[i].type,
           data: {
             input: tasks[i].data.input,
-            output: req.params.id
+            output: req.body.data.output
           }
         }
         reports.push(newReport);
-        tasks[i].data.output = req.params.data.output;
-
+        tasks[i].data.output = req.body.data.output;
+        console.log('added');
         break;
       } else {
         console.log('output still null');
       }
     } else {
-      console.log('requested Task id not present');
+      console.log('ids not matching || requested Task id not present');
     }
   }
 
@@ -309,12 +311,13 @@ app.post('/api/Crypter', (req, res) => {
 
 });
 
-var saveData = function() {
-
+var savaData = function() {
+  console.log('Backup made');
+/*
   fs.writeFile('./reports.json', JSON.stringify(reports), 'utf8', (err) => {
     if (err) throw err;
   });
-
+*/
   fs.writeFile('./tasks.json', JSON.stringify(tasks), 'utf8', (err) => {
     if (err) throw err;
   });
@@ -326,7 +329,11 @@ var saveData = function() {
 
 
 
-//setInterval('saveData()', 10000);
+setInterval(
+  function() {
+    savaData();
+  }, 10000
+);
 
 /*
 const fs = require('fs');

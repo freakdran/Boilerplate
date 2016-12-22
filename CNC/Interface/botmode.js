@@ -4,7 +4,7 @@ var testPoster = function() {
   console.log('tester activated');
   var cyPO = new XMLHttpRequest();
   cyPO.open('POST', 'http://localhost:3000/api/crypter', true);
-//  cyPO.responseType = 'text';
+  //  cyPO.responseType = 'text';
   cyPO.setRequestHeader('Content-Type', 'application/json');
 
   var datts = {
@@ -59,12 +59,10 @@ var useDataReports = function(data) {
     } else {
       sync = 'ok';
     }
-    console.log(sync);
     return '<tr><td style="white-space:nowrap">' + id + '</td><td>' + type + '</td><td>' + input + '</td><td>' + output +'</td><td>' + sync + '</td></tr>';
   }).join('\n');
     return code;
 };
-
 
 var botmodeOn = false;
 var botmodeIntervalId;
@@ -83,26 +81,72 @@ var botmode = function() {
     makeReportsTable();
     console.log('botmode an');
     botmodeIntervalId = setInterval('makeReportsTable()', 5000);
-
-    crypterIntervalId = setInterval('cryptData()', 1500);
+    postIntervalId = setInterval('postNewTasktoReports()', 3000);
+    //crypterIntervalId = setInterval('cryptData()', 1500);
   } else {
     console.log('botmode aus');
     clearInterval(botmodeIntervalId);
-    clearInterval(crypterIntervalId);
-
+    clearInterval(postIntervalId);
+    //clearInterval(crypterIntervalId);
     document.querySelector('#reports tbody').innerHTML = '<tr><td colspan=\'5\'>Bitte Botmode starten</td></tr>';
   }
 }
 
 var postNewTasktoReports = function() {
-  for(var i = 0; i < tasks.length; i++) {
-    for(var j = 0; j < reports.length; j++) {
-      if(tasks[i].id !== reports[j].id) {
-        POSTRequestReports(tasks[i].id, tasks[i].data.input, tasks[i].type);
-      }
+
+  var doppelt = false;
+  var doppeltAt;
+  var tasksGET = new XMLHttpRequest();
+  //reportsGET.open('GET', 'http://botnet.artificial.engineering:80/api/tasks', true);
+  tasksGET.open('GET', 'http://localhost:3000/api/tasks', true);
+  tasksGET.responseType = 'json';
+  tasksGET.setRequestHeader('Content-Type', 'application/json');
+  //  reportsGET.setRequestHeader('Token', 'my-token-123');
+  tasksGET.onload = function() {
+
+    var dataTasks = tasksGET.response;
+    if (dataTasks !== null) {
+
+      var reportsGET = new XMLHttpRequest();
+      reportsGET.open('GET', 'http://localhost:3000/api/reports', true);
+      reportsGET.responseType = 'json';
+      reportsGET.setRequestHeader('Content-Type', 'application/json');
+      //  reportsGET.setRequestHeader('Token', 'my-token-123');
+      reportsGET.onload = function() {
+
+        var dataReports = reportsGET.response;
+
+        console.log('reports');
+        console.log(dataReports);
+    /*    console.log('tasks');
+        console.log(dataTasks);
+*/
+        if(dataReports !== null) {
+          console.log('postnew called');
+          for(var i = 0; i < dataTasks.length; i++) {
+            for(var j = 0; j < dataReports.length; j++) {
+              if(dataTasks[i].id === dataReports[j].id) {
+                doppelt = true;
+              }
+            }
+            if(!doppelt) {
+              console.log('inif');
+              console.log(dataTasks[i]);
+              POSTRequestReports(dataTasks[i].id, dataTasks[i].data.input, dataTasks[i].type, dataTasks[i].data.output);
+              break;
+            } else {
+              console.log('Task mit ID: ' + dataTasks[i].id + ' schon vorhanden');
+              doppelt = false;
+            }
+
+          }
+        }
+      };
+      reportsGET.send(null);
     }
-  }
-}
+  };
+  tasksGET.send(null);
+};
 
 //const crypto = require('crypto');
 
@@ -150,11 +194,11 @@ var cryptData = function(ids, inputs, types) {
             console.log(newOutput);
             return newOutput;
             console.log('noreturn');
-/*
-DIESES RETURN!!!
-///////////////////////////////////////////////////////////////////////////
-MUSS FUNKTIONIEREN!!!
-*/
+            /*
+            DIESES RETURN!!!
+            ///////////////////////////////////////////////////////////////////////////
+            MUSS FUNKTIONIEREN!!!
+            */
           }
         }
         //console.log('outer funkt ' + pree);
@@ -164,18 +208,13 @@ MUSS FUNKTIONIEREN!!!
     };
   };
   tG.send(null);
-
   //console.log('crypter' + getTasksData());
 }
-
-
-
-
 
 /*
 POST this shit
 */
-var POSTRequestReports = function(ids, inputs, types) {
+var POSTRequestReports = function(ids, inputs, types, outputs) {
   var reportsPOST = new XMLHttpRequest();
 
   reportsPOST.open('POST', 'http://localhost:3000/api/reports', true);
@@ -190,13 +229,34 @@ var POSTRequestReports = function(ids, inputs, types) {
       output: null
     }
   };
-  var newOUT = cryptData(ids, inputs, types);
-  console.log('newout' + newOUT);
-  reportToSend.data.output = cryptData(ids, inputs, types);
-  console.log('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW');
+//  var newOUT = cryptData(ids, inputs, types);   //somehow not working
+//  console.log('newout' + newOUT);
+//  reportToSend.data.output = cryptData(ids, inputs, types);   //until here
+
+  /*platzhalter für outputgenerierung*/
+  if(outputs === null) {
+    console.log('new computed');
+    reportToSend.data.output = reverser(inputs, types);
+  } else {
+    console.log('output already present');
+    reportToSend.data.output = outputs;
+  }
+  /*/platzhalter*/
   console.log('toesend ' + JSON.stringify(reportToSend));
   reportsPOST.send(JSON.stringify(reportToSend));
   setTimeout("makeReportsTable()", 500);
 };
+
+var reverser = function(inputs, types) {
+
+  var outputs = '';
+
+  for(var i = 0; i < inputs.length; i++) {
+    outputs += inputs.charAt(inputs.length - i - 1);
+  }
+  outputs += ' ' + types;
+  return outputs;
+};
+
 
  //setInterval("makeReportsTable()",5000);
