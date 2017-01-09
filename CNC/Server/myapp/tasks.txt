@@ -1,1 +1,4 @@
 [{"id":0,"type":"hash-md5","data":{"input":"sample with output","output":"tuptuo htiw elpmas"}},{"id":1,"type":"hash-md5","data":{"input":"sample without output","output":"null"}}]
+
+Sicherheitskopie der Tasks
+(Nicht notwendig)

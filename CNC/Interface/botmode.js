@@ -1,5 +1,6 @@
 
 
+/*
 var testPoster = function() {
   console.log('tester activated');
   var cyPO = new XMLHttpRequest();
@@ -22,6 +23,7 @@ var testPoster = function() {
     }
   }
 }
+*/
 
 /*
 1. Build Reports table when Botmode activated
@@ -80,7 +82,7 @@ var botmode = function() {
   if(botmodeOn) {
     makeReportsTable();
     console.log('botmode an');
-    botmodeIntervalId = setInterval('makeReportsTable()', 5000);
+    botmodeIntervalId = setInterval('makeReportsTable()', 3000);
     postIntervalId = setInterval('postNewTasktoReports()', 3000);
     //crypterIntervalId = setInterval('cryptData()', 1500);
   } else {
@@ -116,13 +118,7 @@ var postNewTasktoReports = function() {
 
         var dataReports = reportsGET.response;
 
-        console.log('reports');
-        console.log(dataReports);
-    /*    console.log('tasks');
-        console.log(dataTasks);
-*/
         if(dataReports !== null) {
-          console.log('postnew called');
           for(var i = 0; i < dataTasks.length; i++) {
             for(var j = 0; j < dataReports.length; j++) {
               if(dataTasks[i].id === dataReports[j].id) {
@@ -130,12 +126,13 @@ var postNewTasktoReports = function() {
               }
             }
             if(!doppelt) {
-              console.log('inif');
-              console.log(dataTasks[i]);
-              POSTRequestReports(dataTasks[i].id, dataTasks[i].data.input, dataTasks[i].type, dataTasks[i].data.output);
-              break;
+              if(dataTasks[i].data.output === null) {
+                POSTRequestReports(dataTasks[i].id, dataTasks[i].data.input, dataTasks[i].type, dataTasks[i].data.output);
+                break;
+              } else {
+                POSTRequestReports(dataTasks[i].id, dataTasks[i].data.input, dataTasks[i].type, dataTasks[i].data.output);
+              }
             } else {
-              console.log('Task mit ID: ' + dataTasks[i].id + ' schon vorhanden');
               doppelt = false;
             }
 
@@ -257,6 +254,3 @@ var reverser = function(inputs, types) {
   outputs += ' ' + types;
   return outputs;
 };
-
-
- //setInterval("makeReportsTable()",5000);

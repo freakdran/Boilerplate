@@ -11,69 +11,9 @@ app.use('/api',router);
 app.use(parser.urlencoded({ extended: true }));
 app.use(parser.json());
 
-let bots; /*
- = [
-  {
-    id:0,
-    ip: '127.0.0.1',
-    task: 1,
-    workload: 0.0
-  },{
-    id:1,
-    ip: '182.142.154.214',
-    task: 1,
-    workload: 1.0
-  },{
-    id:2,
-    ip: '246.73.94.71',
-    task: 1,
-    workload: 0.0
-  },{
-    id:3,
-    ip: '8ba7:8331:1b2:a51b:ff59:bd75:6da7:bff3',
-    task: 1,
-    workload: 1.0
-  },{
-    id:4,
-    ip: '686e:ef75:7515:24ad:d45c:6f16:81dd:90a4',
-    task: 1,
-    workload: 0.0
-  }
-];
-*/
-
+let bots;
 let tasks;
-/*= [
-  {
-    id:0,
-    type: 'hash-md5',
-    data: {
-      input: 'sample with output',
-      output: 'tuptuo htiw elpmas'
-    }
-  },{
-    id:1,
-    type: 'hash-md5',
-    data: {
-      input: 'sample without output',
-      output: 'null'
-    }
-  }
-]
-*/
-
-
 let reports;
-
-/*
-fs.writeFile('./bots.json', JSON.stringify(bots), 'utf8', (err) => {
-  if (err) throw err;
-});
-
-fs.writeFile('./tasks.json', JSON.stringify(tasks), 'utf8', err => {
-  if (err) throw err;
-})
-*/
 
 /*
 Beide Arrays werden einmalig erstellt aus .json Datei
@@ -334,29 +274,3 @@ setInterval(
     savaData();
   }, 10000
 );
-
-/*
-const fs = require('fs');
-
-var datass;
-fs.readFile('./mytext.txt', 'utf8', (err, data) => {
-
-    if (err) throw err;
-
-    console.log(data);	// 'foobar'
-	  datass = data;
-
-});
-
-fs.writeFile('./mytextwrite.txt', datass, (err) => {
-  if (err) throw err;
-  console.log(datass);
-  console.log('It\'s saved!');
-});
-
-var foo = 'asdf\nfdsa\nfoo\noof';
-fs.writeFile('./mytextwrite2.txt', foo, (err) => {
-  if (err) throw err;
-  console.log('It\'s saved!');
-});
-*/
