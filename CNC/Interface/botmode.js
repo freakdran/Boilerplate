@@ -1,5 +1,7 @@
 
 
+const crypto = require('crypto');
+
 /*
 var testPoster = function() {
   console.log('tester activated');
@@ -253,4 +255,41 @@ var reverser = function(inputs, types) {
   }
   outputs += ' ' + types;
   return outputs;
-};
+}
+
+var cryptermuell = function(toCrypt) {
+
+  var input = toCrypt.input;
+  var type = toCrypt.type;
+  var result;
+
+  if(input !== null) {
+    if(type !== null) {
+      if(type === 'hash-md5') {
+        let md5sum = crypto.createHash('md5');
+        md5sum.update(input);
+        result = md5sum.digest();
+        console.log(result.toString('hex'));
+        console.log(result);
+      } else if(type === 'hash-sha256') {
+        let sha256sum = crypto.createHash('sha256');
+        sha256sum.update(input);
+        result = sha256sum.digest();
+      } else if(type === 'crack-md5') {
+        console.log('crack-md5 not supported')
+        result = 'Cannot create output';
+      } else {
+        console.log('Wrong type');
+        result = null;
+      }
+    } else {
+      console.log('No type defined');
+      result = null;
+    }
+  } else {
+    console.log('No input');
+    result = null;
+  }
+
+  return result;
+}

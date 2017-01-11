@@ -191,7 +191,7 @@ app.post('/api/Reports', (req, res) => {
       if(req.body.data.output !== null) {
         newReport = {
           id: tasks[i].id,
-          type: tasks[i].type,
+      //    type: tasks[i].type,
           data: {
             input: tasks[i].data.input,
             output: req.body.data.output
@@ -208,10 +208,6 @@ app.post('/api/Reports', (req, res) => {
       console.log('ids not matching || requested Task id not present');
     }
   }
-
-
-
-
 })
 
 app.post('/api/Crypter', (req, res) => {
@@ -226,10 +222,9 @@ app.post('/api/Crypter', (req, res) => {
       if(type === 'hash-md5') {
         let md5sum = crypto.createHash('md5');
         md5sum.update(input);
-        let result = md5sum.digest('hex');
-        console.log(result);
-        res.responseText = 'asdf';
-        res.json(result);
+        let result = md5sum.digest();
+        console.log(result.toString('hex'));
+        res.json({ foo: result });
       } else if(type === 'hash-sha256') {
         let sha256sum = crypto.createHash('sha256');
         sha256sum.update(input);
