@@ -11,5 +11,8 @@
   "dependencies": {
     "express": "^4.14.0",
     "install-nw": "^1.1.5"
+  },
+  "devDependencies": {
+    "eslint": "^3.13.1"
   }
 }

@@ -1,31 +1,33 @@
 
+//const crypto = require('crypto');
 
-const crypto = require('crypto');
 
-/*
-var testPoster = function() {
-  console.log('tester activated');
-  var cyPO = new XMLHttpRequest();
-  cyPO.open('POST', 'http://localhost:3000/api/crypter', true);
-  //  cyPO.responseType = 'text';
-  cyPO.setRequestHeader('Content-Type', 'application/json');
 
-  var datts = {
-    type: 'hash-md5',
-    input: 'woot'
-  }
-  console.log(JSON.stringify(datts));
-  cyPO.send(JSON.stringify(datts));
-  console.log(cyPO.responseText);
 
-  cyPO.onreadystatechange = function() {
-    if(cyPO.readyState == XMLHttpRequest.DONE) {
-      console.log(cyPO.responseText);
 
+var copyTasksToReports = function() {
+	console.log('copy called');
+
+	var reportsGET = new XMLHttpRequest();
+
+	reportsGET.open('GET', 'http://localhost:3000/api/tasks', true);
+  reportsGET.responseType = 'json';
+  reportsGET.setRequestHeader('Content-Type', 'application/json');
+
+	reportsGET.onload = function() {
+
+		var data = reportsGET.response;
+
+		if (data !== null) {
+      for(let i = 0; i < data.length; i++) {
+				POSTRequestReports(data.id, data.type, data.data.input, null);
+			}
     }
-  }
+	}
+	reportsGET.send(null);
 }
-*/
+
+
 
 /*
 1. Build Reports table when Botmode activated
@@ -34,7 +36,7 @@ var makeReportsTable = function() {
   var reportsGET = new XMLHttpRequest();
 
   //reportsGET.open('GET', 'http://botnet.artificial.engineering:80/api/reports', true);
-  reportsGET.open('GET', 'http://localhost:3000/api/reports', true);
+  reportsGET.open('GET', 'http://localhost:3000/api/tasks', true);
   reportsGET.responseType = 'json';
   reportsGET.setRequestHeader('Content-Type', 'application/json');
   //  reportsGET.setRequestHeader('Token', 'my-token-123');
@@ -59,9 +61,9 @@ var useDataReports = function(data) {
     var sync;
 
     if(output === null){
-      sync = 'not ok';
+      sync = 'NOT OK';
     } else {
-      sync = 'ok';
+      sync = 'OK';
     }
     return '<tr><td style="white-space:nowrap">' + id + '</td><td>' + type + '</td><td>' + input + '</td><td>' + output +'</td><td>' + sync + '</td></tr>';
   }).join('\n');
@@ -92,7 +94,7 @@ var botmode = function() {
     clearInterval(botmodeIntervalId);
     clearInterval(postIntervalId);
     //clearInterval(crypterIntervalId);
-    document.querySelector('#reports tbody').innerHTML = '<tr><td colspan=\'5\'>Bitte Botmode starten</td></tr>';
+		//document.querySelector('#reports tbody').innerHTML = '<tr><td colspan=\'5\'>Bitte Botmode starten</td></tr>';
   }
 }
 
@@ -228,9 +230,9 @@ var POSTRequestReports = function(ids, inputs, types, outputs) {
       output: null
     }
   };
-//  var newOUT = cryptData(ids, inputs, types);   //somehow not working
-//  console.log('newout' + newOUT);
-//  reportToSend.data.output = cryptData(ids, inputs, types);   //until here
+	//  var newOUT = cryptData(ids, inputs, types);   //somehow not working
+	//  console.log('newout' + newOUT);
+	//  reportToSend.data.output = cryptData(ids, inputs, types);   //until here
 
   /*platzhalter für outputgenerierung*/
   if(outputs === null) {
@@ -256,7 +258,7 @@ var reverser = function(inputs, types) {
   outputs += ' ' + types;
   return outputs;
 }
-
+/*
 var cryptermuell = function(toCrypt) {
 
   var input = toCrypt.input;
@@ -293,3 +295,11 @@ var cryptermuell = function(toCrypt) {
 
   return result;
 }
+*/
+
+
+
+
+
+
+setTimeout(makeReportsTable(), 2000);
