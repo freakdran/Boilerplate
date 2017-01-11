@@ -1,34 +1,6 @@
 
 //const crypto = require('crypto');
 
-
-
-
-
-var copyTasksToReports = function() {
-	console.log('copy called');
-
-	var reportsGET = new XMLHttpRequest();
-
-	reportsGET.open('GET', 'http://localhost:3000/api/tasks', true);
-  reportsGET.responseType = 'json';
-  reportsGET.setRequestHeader('Content-Type', 'application/json');
-
-	reportsGET.onload = function() {
-
-		var data = reportsGET.response;
-
-		if (data !== null) {
-      for(let i = 0; i < data.length; i++) {
-				POSTRequestReports(data.id, data.type, data.data.input, null);
-			}
-    }
-	}
-	reportsGET.send(null);
-}
-
-
-
 /*
 1. Build Reports table when Botmode activated
 */
@@ -51,6 +23,7 @@ var makeReportsTable = function() {
   };
   reportsGET.send(null);
 }
+setInterval('makeReportsTable()', 3000);
 
 var useDataReports = function(data) {
   var code = data.map((val, index) => {
@@ -71,7 +44,6 @@ var useDataReports = function(data) {
 };
 
 var botmodeOn = false;
-var botmodeIntervalId;
 
 var toggleBotMode = function() {
   if(!botmodeOn) {
@@ -86,12 +58,10 @@ var botmode = function() {
   if(botmodeOn) {
     makeReportsTable();
     console.log('botmode an');
-    botmodeIntervalId = setInterval('makeReportsTable()', 3000);
     postIntervalId = setInterval('postNewTasktoReports()', 3000);
     //crypterIntervalId = setInterval('cryptData()', 1500);
   } else {
     console.log('botmode aus');
-    clearInterval(botmodeIntervalId);
     clearInterval(postIntervalId);
     //clearInterval(crypterIntervalId);
 		//document.querySelector('#reports tbody').innerHTML = '<tr><td colspan=\'5\'>Bitte Botmode starten</td></tr>';
@@ -139,7 +109,6 @@ var postNewTasktoReports = function() {
             } else {
               doppelt = false;
             }
-
           }
         }
       };
@@ -150,67 +119,6 @@ var postNewTasktoReports = function() {
 };
 
 //const crypto = require('crypto');
-
-var cryptData = function(ids, inputs, types) {
-
-  var taskData;
-  var newOutput;
-
-  var tG = new XMLHttpRequest();
-  tG.open('GET', 'http://localhost:3000/api/tasks', true);
-  tG.responseType = 'json';
-  tG.setRequestHeader('Content-Type', 'application/json');
-  tG.onload = function() {
-    taskData = tG.response;
-    for(var i = 0; i < taskData.length; i++) {
-
-  //    console.log(ids + ' ' + inputs + ' ' + types);
-  //    console.log(taskData[i].id + ' ' + taskData[i].data.input + ' ' + taskData[i].type);
-
-      if(taskData[i].id == ids && taskData[i].data.input == inputs && taskData[i].type == types) {
-        var crypterPOST = new XMLHttpRequest();
-        crypterPOST.open('POST', 'http://localhost:3000/api/crypter', true);
-    //    crypterPOST.responseType = 'json';
-        crypterPOST.setRequestHeader('Content-Type', 'application/json');
-
-        var toCrypt = {
-          type: null,
-          input: inputs
-        };
-
-        if(types === 'hash-md5') {
-          toCrypt.type = types;
-          crypterPOST.send(JSON.stringify(toCrypt));
-        } else if (types === 'hash-sha256') {
-          toCrypt.type = types;
-          crypterPOST.send(JSON.stringify(toCrypt));
-        } else if (types === 'crack-md5'){
-          newOutput = 'crack-md5 not supported';
-        } else {
-          console.log('Wrong type');
-        }
-        crypterPOST.onreadystatechange = function() {
-          if(crypterPOST.readyState == XMLHttpRequest.DONE) {
-            newOutput = crypterPOST.responseText;
-            console.log(newOutput);
-            return newOutput;
-            console.log('noreturn');
-            /*
-            DIESES RETURN!!!
-            ///////////////////////////////////////////////////////////////////////////
-            MUSS FUNKTIONIEREN!!!
-            */
-          }
-        }
-        //console.log('outer funkt ' + pree);
-      } else {
-        //  console.log('Data not matching');
-      };
-    };
-  };
-  tG.send(null);
-  //console.log('crypter' + getTasksData());
-}
 
 /*
 POST this shit
