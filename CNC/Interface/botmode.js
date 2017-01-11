@@ -55,14 +55,17 @@ var toggleBotMode = function() {
 }
 
 var botmode = function() {
+	var botmodebutton = document.getElementById('starttoggle');
   if(botmodeOn) {
     makeReportsTable();
     console.log('botmode an');
     postIntervalId = setInterval('postNewTasktoReports()', 3000);
-    //crypterIntervalId = setInterval('cryptData()', 1500);
+		botmodebutton.innerHTML = 'Stop Botmode';
+		//crypterIntervalId = setInterval('cryptData()', 1500);
   } else {
     console.log('botmode aus');
     clearInterval(postIntervalId);
+		botmodebutton.innerHTML = 'Start Botmode';
     //clearInterval(crypterIntervalId);
 		//document.querySelector('#reports tbody').innerHTML = '<tr><td colspan=\'5\'>Bitte Botmode starten</td></tr>';
   }
