@@ -1,0 +1,12 @@
+{
+	"name": "helloworld",
+	"node-main": "./CNC/Server/myapp/myapp.js",
+	"main": "./CNC/Interface/Site.html",
+	"window": {
+		"title" : "CNC Interface",
+		"width" : 1000,
+		"height" : 600,
+		"position" : "center"
+	},
+	"nodejs": true
+}

@@ -1,5 +1,4 @@
 module.exports = {
-  {
 	"env": {
 		"browser": true,
 		"es6": true,
@@ -115,5 +114,4 @@ module.exports = {
 		"space-infix-ops": [ "error" ],
 		"space-unary-ops": [ "error" ]
 	}
-}
 };

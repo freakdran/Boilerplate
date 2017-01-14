@@ -4,7 +4,6 @@ const cors = require('cors');
 const router = express.Router();
 const parser = require('body-parser');
 const fs = require('fs');
-const crypto = require('crypto');
 
 app.use(cors());
 app.use('/api', router);
@@ -19,23 +18,23 @@ let reports;
 Beide Arrays werden einmalig erstellt aus .json Datei
 */
 
-fs.readFile('./bots.json', 'utf8', (err, data) => {
-
+fs.readFile('./CNC/Server/myapp/bots.json', 'utf8', (err, data) => {
 	if (err) throw err;
 	bots = JSON.parse(data);
 });
 
-fs.readFile('./tasks.json', 'utf8', (err, data) => {
+fs.readFile('./CNC/Server/myapp/tasks.json', 'utf8', (err, data) => {
 
 	if (err) throw err;
 	tasks = JSON.parse(data);
 });
 
-fs.readFile('./reports.json', 'utf8', (err, data) => {
+fs.readFile('./CNC/Server/myapp/reports.json', 'utf8', (err, data) => {
 
 	if (err) throw err;
 	reports = JSON.parse(data);
 });
+
 
 /*
 Server erstellen mit Port 3000 (localhost:3000)
@@ -50,7 +49,7 @@ All the GET
 */
 
 app.get('/', function (req, res) {
-	res.send('<pre style = "font-family:  monospace;">Not found</pre>');
+	res.send('<pre style = "font-family:  monospace;">Not found MAIN</pre>');
 });
 
 router.get('/', function (req, res) {
@@ -93,27 +92,27 @@ All the POST
 
 app.post('/api/Status', (req, res) => {
 	let idpresent = false;
-	let botnumber;
 
-
-	for (let i = 0; i < bots.length; i++) {
-		if (bots[i].id === req.body.id) {
-			idpresent = true;
-			botnumber = i;
+	if (req.headers.token === 'Manatees') {
+		for (let i = 0; i < bots.length; i++) {
+			if (bots[i].id === req.body.id) {
+				idpresent = true;
+			}
 		}
-	}
 
-	if (idpresent && typeof req.body.status === 'boolean') {
-		if (req.body.status === true) {
-			bots[req.body.id].workload = 1.0;
-			console.log('Bot with id:' + req.body.id + ' set to 1');
+		if (idpresent && typeof req.body.status === 'boolean') {
+			if (req.body.status === true) {
+				bots[req.body.id].workload = 1.0;
+				console.log('Bot with id:' + req.body.id + ' set to 1');
+			} else {
+				bots[req.body.id].workload = 0.0;
+				console.log('Bot with id:' + req.body.id + ' set to 0');
+			}
+			idpresent = false;
+			res.json('OK');
 		} else {
-			bots[req.body.id].workload = 0.0;
-			console.log('Bot with id:' + req.body.id + ' set to 0');
+			res.json('NOT OK');
 		}
-
-		idpresent = false;
-		res.json('OK');
 	} else {
 		res.json('NOT OK');
 	}
@@ -131,42 +130,47 @@ app.post('/api/Tasks', (req, res) => {
 
 	let newTaskType;
 
-	switch (req.body.type) {
-		case 'hash-md5': newTaskType = req.body.type;
-			break;
-		case 'hash-sha256': newTaskType = req.body.type;
-			break;
-		case 'crack-md5': newTaskType = req.body.type;
-			break;
-		default: console.log('Falscher Typ');
-	}
+	if (req.headers.token === 'Manatees') {
 
-	if (newTaskType !== null) {
-
-		let newID = 0;
-		let taskPresent = false;
-
-		for (let i = 0; i < tasks.length; i++) {
-			newID = Math.max(tasks[i].id, newID);
-			if (tasks[i].data.input === req.body.data.input && tasks[i].type === req.body.type) {
-				taskPresent = true;
-			}
+		switch (req.body.type) {
+			case 'hash-md5': newTaskType = req.body.type;
+				break;
+			case 'hash-sha256': newTaskType = req.body.type;
+				break;
+			case 'crack-md5': newTaskType = req.body.type;
+				break;
+			default: console.log('Falscher Typ');
 		}
-		if (!taskPresent) {
-			let newTask = {
-				id: newID + 1,
-				type: newTaskType,
-				data: {
-					input: req.body.data.input,
-					output: null
+
+		if (newTaskType !== null) {
+
+			let newID = 0;
+			let taskPresent = false;
+
+			for (let i = 0; i < tasks.length; i++) {
+				newID = Math.max(tasks[i].id, newID);
+				if (tasks[i].data.input === req.body.data.input && tasks[i].type === req.body.type) {
+					taskPresent = true;
 				}
-			};
-			console.log('Task addded');
-			tasks.push(newTask);
-			savaData();
-			res.json('OK');
+			}
+			if (!taskPresent) {
+				let newTask = {
+					id: newID + 1,
+					type: newTaskType,
+					data: {
+						input: req.body.data.input,
+						output: null
+					}
+				};
+				console.log('Task addded');
+				tasks.push(newTask);
+				savaData();
+				res.json('OK');
+			} else {
+				console.log('Task already present');
+				res.json('NOT OK');
+			}
 		} else {
-			console.log('Task already present');
 			res.json('NOT OK');
 		}
 	} else {
@@ -184,16 +188,11 @@ app.post('/api/Tasks/:id', (req, res) => {
 
 app.post('/api/Reports', (req, res) => {
 
-	/*
-  Wenn output === null => NOT OK
-  Wenn output !== null => OK + Berechnen
-  */
-
 	console.log('got post request');
 	for (let i = 0; i < tasks.length; i++) {
 		if (tasks[i].id === req.body.id) {
 			if (req.body.data.output !== null) {
-				newReport = {
+				let newReport = {
 					id: tasks[i].id,
 					type: tasks[i].type,
 					data: {
@@ -260,7 +259,6 @@ app.post('/api/Crypter', (req, res) => {
 });
 
 const savaData = function() {
-	console.log('Backup made');
 
 	/*
 	fs.writeFile('./reports.json', JSON.stringify(reports), 'utf8', (err) => {
@@ -268,13 +266,15 @@ const savaData = function() {
   });
 	*/
 
-	fs.writeFile('./tasks.json', JSON.stringify(tasks), 'utf8', (err) => {
+	fs.writeFile('./CNC/Server/myapp/tasks.json', JSON.stringify(tasks), 'utf8', (err) => {
 		if (err) throw err;
 	});
 
-	fs.writeFile('./bots.json', JSON.stringify(bots), 'utf8', (err) => {
+	fs.writeFile('./CNC/Server/myapp/bots.json', JSON.stringify(bots), 'utf8', (err) => {
 		if (err) throw err;
 	});
+
+	console.log('Backup made');
 };
 
 
@@ -282,5 +282,5 @@ const savaData = function() {
 setInterval(
 	function() {
 		savaData();
-	}, 10000
+	}, 1000
 );
