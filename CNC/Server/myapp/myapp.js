@@ -35,14 +35,10 @@ fs.readFile('./CNC/Server/myapp/reports.json', 'utf8', (err, data) => {
 	reports = JSON.parse(data);
 });
 
-
-/*
-Server erstellen mit Port 3000 (localhost:3000)
-*/
-
 app.listen(3000, function () {
 	console.log('Server opened on Port 3000');
 });
+
 
 /*
 All the GET
@@ -85,6 +81,7 @@ router.get('/Tasks/:id', function (req, res) {
 router.get('/Reports', function (req, res) {
 	res.json(reports);
 });
+
 
 /*
 All the POST
@@ -188,7 +185,7 @@ app.post('/api/Tasks/:id', (req, res) => {
 
 app.post('/api/Reports', (req, res) => {
 
-	console.log('got post request');
+	console.log('Got post request');
 	for (let i = 0; i < tasks.length; i++) {
 		if (tasks[i].id === req.body.id) {
 			if (req.body.data.output !== null) {
@@ -259,12 +256,6 @@ app.post('/api/Crypter', (req, res) => {
 });
 
 const savaData = function() {
-
-	/*
-	fs.writeFile('./reports.json', JSON.stringify(reports), 'utf8', (err) => {
-    if (err) throw err;
-  });
-	*/
 
 	fs.writeFile('./CNC/Server/myapp/tasks.json', JSON.stringify(tasks), 'utf8', (err) => {
 		if (err) throw err;

@@ -17,7 +17,6 @@ let makeReportsTable = function() {
 
 		let data = reportsGET.response;
 		if (data !== null) {
-			//          console.log(data); // Parsed JSON object
 			let element = document.querySelector('#reports tbody');
 			element.innerHTML = useDataReports(data);
 		}
@@ -64,13 +63,10 @@ let botmode = function() {
 		console.log('botmode an');
 		postIntervalId = setInterval('postNewTasktoReports()', 3000);
 		botmodebutton.innerHTML = 'Stop Botmode';
-		//crypterIntervalId = setInterval('cryptData()', 1500);
 	} else {
 		console.log('botmode aus');
 		clearInterval(postIntervalId);
 		botmodebutton.innerHTML = 'Start Botmode';
-		//clearInterval(crypterIntervalId);
-		//document.querySelector('#reports tbody').innerHTML = '<tr><td colspan=\'5\'>Bitte Botmode starten</td></tr>';
 	}
 };
 
@@ -82,7 +78,7 @@ let postNewTasktoReports = function() {
 	tasksGET.open('GET', 'http://localhost:3000/api/tasks', true);
 	tasksGET.responseType = 'json';
 	tasksGET.setRequestHeader('Content-Type', 'application/json');
-	//  reportsGET.setRequestHeader('Token', 'my-token-123');
+	reportsGET.setRequestHeader('Token', 'Manatees');
 	tasksGET.onload = function() {
 
 		let dataTasks = tasksGET.response;
@@ -92,7 +88,6 @@ let postNewTasktoReports = function() {
 			reportsGET.open('GET', 'http://localhost:3000/api/reports', true);
 			reportsGET.responseType = 'json';
 			reportsGET.setRequestHeader('Content-Type', 'application/json');
-			//  reportsGET.setRequestHeader('Token', 'my-token-123');
 			reportsGET.onload = function() {
 
 				let dataReports = reportsGET.response;
@@ -145,10 +140,8 @@ let POSTRequestReports = function(ids, inputs, types, outputs) {
 	};
 
 	if (outputs === null) {
-		//console.log('new computed');
 		reportToSend.data.output = cryptermuell(inputs, types);
 	} else {
-		//console.log('output already present');
 		reportToSend.data.output = outputs;
 	}
 	reportsPOST.send(JSON.stringify(reportToSend));
