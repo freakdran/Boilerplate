@@ -78,7 +78,7 @@ let postNewTasktoReports = function() {
 	tasksGET.open('GET', 'http://localhost:3000/api/tasks', true);
 	tasksGET.responseType = 'json';
 	tasksGET.setRequestHeader('Content-Type', 'application/json');
-	reportsGET.setRequestHeader('Token', 'Manatees');
+	tasksGET.setRequestHeader('Token', 'Manatees');
 	tasksGET.onload = function() {
 
 		let dataTasks = tasksGET.response;
